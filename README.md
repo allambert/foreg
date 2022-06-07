@@ -1,4 +1,4 @@
-# Functional output regression with Huber and epsilon insensitive losses
+# Foreg
 
 ## I / Dependencies 
 This code was developped using Python 3.8, the required packages are listed in the file **requirements.txt**. 
