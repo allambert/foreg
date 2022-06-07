@@ -1,0 +1,9 @@
+scipy
+pathlib
+slycot
+numpy >= 1.18.1
+pandas
+scipy >= 1.4.1
+sklearn
+torch >= 1.4.0
+joblib
