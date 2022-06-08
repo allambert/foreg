@@ -33,9 +33,11 @@ To estimate those models, we propose estimators which correspond to different lo
 ### C / Solvers
 Several solvers are proposed. They can be chosen when fitting the estimators
 
-- For epsilon insensitive and Huber losses, either *FISTA* or *FISTA with restarts* can be used.
+- For epsilon insensitive and Huber losses, either *accelerated proximal gradient descent ("acc_proxgd")` or *accelerated proximal gradient descent with restarts ("acc_proxgd_restart")* can be used.
 
-- For the square loss, an additional solver based on Sylvester equation solver is proposed and is much faster. 
+- For the square loss, an additional solver based on *Sylvester equation solver ("Sylvester")* is proposed and is much faster. 
+
+See the parameters for the `fit` method in the next section for how to choose a solver. 
 
 ### D / Overview of relevant parameters
 We give a brief overview of some key parameters, we refer to section III and the corresponding script for examples.
@@ -67,22 +69,22 @@ We give a brief overview of some key parameters, we refer to section III and the
 - **x (torch.Tensor)**: Input data
 - **y (torch.Tensor)**: Output data
 - **thetas (torch.Tensor)**: Sampling locations of the observations in y
-- **solver (str)**: The solver to use, must be in {"FISTA", "FISTA_restart", "Sylvester"}. Note that Sylvester is valid only for the square loss and will raise an Error if passed for other losses. Default is "FISTA_restart".
+- **solver (str)**: The solver to use, must be in {"acc_proxgd", "acc_proxgd_restart", "Sylvester"}. Note that Sylvester is valid only for the square loss and will raise an Error if passed for other losses. Default is "acc_proxgd_restart" for all estimators.
 - **n_epochs (int)**: Maximum number of iterations
 - **warm_start (bool)**: Should the estimator be re-initialized
 - **tol (float)**: Stopping criterion. Iterative procedure stops when the normalized distance between consecutive iterates gets below this parameter
-- **beta (float)**: Parameter for line search, must have 0 < beta < 1
-- **sylvester_init (bool)**: Should initialization with close form for the square loss computed with Sylvester solver be used as initialization
+- **beta (float)**: Parameter for line search, 0 < beta < 1
+- **sylvester_init (bool)**: Should initialization with close form for the square loss computed with Sylvester solver be used
 - **verbose (bool)**: Should details of iterations be displayed during fitting
 
 ## III / Quick start with simple examples
-We provide a tool for generating a synthetic function to function regression dataset based on Gaussian processes in `datasets`.
+We provide a tool for generating a synthetic function to function regression dataset based on Gaussian processes in `datasets`. An instance of this dataset with default parameters can be generated easily with the `load_gp_dataset` function from the file `datasets\load_synthetic.py`, the corresponding default parameters are in the file `datasets\config_synth` and can therefore be changed.
 
-Simple examples running the proposed approaches on such synthetic dataset can be found in `demos`.
+Simple examples running the proposed models and estimators on such synthetic dataset can be found in the folder `demos`.
 
 - In the script `demos\synth.py`, we demonstrate basic usage of the models and estimators and give a brief overview of the most relevant parameters.
 
-- In the script `demos\synth_robust_cv.py`, we demonstrate how to select estimators based on cross-validation using the functions provided in `model_selection`. 
+- In the script `demos\synth_robust_cv.py`, we demonstrate how to select estimators based on cross-validation using the functions provided in the folder `model_selection`. 
 
 
 ## Cite

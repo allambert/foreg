@@ -202,20 +202,20 @@ class FOR(ABC):
     def fit_sylvester(x, y, thetas, G_x=None, G_t=None):
         pass
 
-    def fit(self, x, y, thetas, solver="FISTA_restart", n_epoch=20000, warm_start=True, tol=1e-6, beta=0.8,
+    def fit(self, x, y, thetas, solver="acc_proxgd_restart", n_epoch=20000, warm_start=True, tol=1e-6, beta=0.8,
             monitor_loss=None, reinit_losses=True, d=20, G_x=None, G_t=None, verbose=True, sylvester_init=False):
-        if solver == "FISTA_restart":
+        if solver == "acc_proxgd_restart":
             if sylvester_init: 
                 self.fit_sylvester(x, y, thetas, G_x=G_x, G_t=G_t)
                 warm_start = True
             self.fit_acc_prox_restart_gd(x, y, thetas, n_epoch, warm_start, tol, beta, monitor_loss, reinit_losses, d, G_x, G_t, verbose)
-        elif solver == "FISTA":
+        elif solver == "acc_proxgd":
             if sylvester_init: 
                 self.fit_sylvester(x, y, thetas, G_x=G_x, G_t=G_t)
                 warm_start = True
             self.fit_acc_prox_gd(x, y, thetas, n_epoch, warm_start, tol, beta, monitor_loss, reinit_losses, d, G_x, G_t, verbose)
         elif solver == "Sylvester":
-            if isinstance(self, RobustFOREig) or isinstance(self, RobustFORSpl) or isinstance(self, SparseFOREig) or isinstance(self, SparseFORSpl):
+            if isinstance(self, (RobustFOREig, RobustFORSpl, SparseFOREig, SparseFORSpl)):
                 raise ValueError("Sylvester solver can only be used for the square loss")
             self.fit_sylvester(x, y, thetas, G_x=G_x, G_t=G_t)
         else:
@@ -343,7 +343,7 @@ class SparseFOREig(FOREig):
 
 class RobustFORSpl(FORSpl):
 
-    def __init__(self, model, lbda, loss_param=0.1, norm='2'):
+    def __init__(self, model, lbda, loss_param=0.1, norm='inf'):
         super().__init__(model, lbda)
         self.loss_param = loss_param
         self.norm = norm
@@ -401,7 +401,7 @@ class RobustFORSpl(FORSpl):
 
 class SparseFORSpl(FORSpl):
 
-    def __init__(self, model, lbda, loss_param=0.1, norm='2'):
+    def __init__(self, model, lbda, loss_param=0.1, norm='inf'):
         super().__init__(model, lbda)
         self.loss_param = loss_param
         self.norm = norm

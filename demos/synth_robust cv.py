@@ -78,7 +78,7 @@ if __name__ == "__main__":
     # Cross validate estimators with Huber 2 loss and return best one
     best_esti_hub2, _ = msel.tune_estis(estis_hub2, Xtrain, Ytrain_corr, theta.view(-1, 1), G_x=G_x, G_t=G_t,
                                         n_splits=5, reduce_stat="median", random_state=342, 
-                                        solver="FISTA_restart", n_epoch=20000, warm_start=True,
+                                        solver="acc_proxgd_restart", n_epoch=20000, warm_start=True,
                                         tol=1e-8, beta=0.8, d=20, sylvester_init=True, 
                                         n_jobs=-1, fit_best=True)
     
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     # Cross validate estimators with Huber 2 loss and return best one
     best_esti_hub1, _ = msel.tune_estis(estis_hub1, Xtrain, Ytrain_corr, theta.view(-1, 1), G_x=G_x, G_t=G_t,
                                            n_splits=5, reduce_stat="median", random_state=342, 
-                                           solver="FISTA_restart", n_epoch=20000, warm_start=True,
+                                           solver="acc_proxgd_restart", n_epoch=20000, warm_start=True,
                                            tol=1e-8, beta=0.8, d=20, sylvester_init=True, 
                                            n_jobs=-1, fit_best=True)
     
