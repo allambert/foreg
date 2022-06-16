@@ -92,7 +92,7 @@ The losses and the corresponding estimators are described extensively in the pap
 
  Please cite it when using this library
 ```
-@inproceedings{LambertEtAl22icml,
+@inproceedings{lambert22functional,
   title={Functional Output Regression with Infimal Convolution:
 Exploring the Huber and $\epsilon$-insensitive Losses},
   author={Lambert, Alex and Bouche, Dimitri and Szab{\'o}, Zolt{\'a}n and d’Alch{\'e}-Buc, Florence},
